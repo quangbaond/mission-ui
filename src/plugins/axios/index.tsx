@@ -40,7 +40,12 @@ instance.interceptors.response.use(
     if (error?.response?.status === 401) {
       window.location.href = '/login'
     }
-    // error.response.data.status = false
+    return {
+      status: false,
+      data: error.response.data.result,
+      message: error.response.data.message
+    }
+
     return Promise.reject(error)
   },
 )

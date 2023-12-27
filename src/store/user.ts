@@ -23,7 +23,6 @@ const userStore = {
   actions: {
     async login({ commit }: { commit: any }, params: ILoginParams) {
       const res = await POST("/auth/login", params);
-      console.log(res.data.data);
 
       if (res.status) {
         commit("setLogin", true);
@@ -44,23 +43,15 @@ const userStore = {
 
     async register({ commit }: { commit: any }, params: ILoginParams) {
       const res = await POST("/auth/register", params);
-      console.log(res.data.data);
-
-      if (res.status) {
-        commit("setLogin", true);
-        commit("setProfile", res.data.data);
-      }
 
       return res;
     },
 
     async getProfile({ commit }: { commit: any }) {
       const res = await GET("/v1/profile");
-      console.log(res.data.data);
+      console.log(res.data);
 
       if (res.status) {
-        console.log(res.data?.result);
-
         commit("setProfile", res.data.result);
       }
 

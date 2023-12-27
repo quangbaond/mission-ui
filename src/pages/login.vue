@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { setStorage } from '@/@common';
+import { removeStorage, setStorage } from '@/@common';
 import { PROFILE_KEY, TOKEN_KEY } from '@/@common/constants';
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue';
 import logo from '@images/logo.svg?raw';
@@ -59,6 +59,11 @@ const submitForm = async () => {
     }
   }
 }
+
+onMounted(() => {
+  removeStorage(PROFILE_KEY)
+  removeStorage(TOKEN_KEY)
+})
 </script>
 
 <template>
@@ -94,7 +99,6 @@ const submitForm = async () => {
       <VCardText>
         <VForm
           ref="formRef"
-          fast-fail
           @submit.prevent="submitForm"
         >
           <VRow>

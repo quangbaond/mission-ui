@@ -1,13 +1,53 @@
 <script setup lang="ts">
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-import logo from '@images/logo.svg?raw'
+import logo from '@images/logo.svg?raw';
+import { inject } from 'vue';
+import { useStore } from 'vuex';
+const swal = inject('$swal')
+const store = useStore()
 
 const form = ref({
-  username: '',
+  name: '',
   email: '',
   password: '',
-  privacyPolicies: false,
 })
+
+const formRef = ref(null as any)
+
+const router = useRouter()
+
+const register = async () => {
+  const isValid = await formRef.value.validate()
+
+  console.log(isValid)
+
+  if (isValid.valid) {
+    console.log(form.value)
+
+    const response = await store.dispatch('userStore/register', form.value)
+
+    const { status, data, message } = response
+
+    if(status) {
+      swal({
+        title: 'Register Success',
+        text: message,
+        icon: 'success',
+        timer: 2000,
+      })
+
+      return router.push({ name: 'login' })
+    }
+
+    swal({
+      title: 'Register Failed',
+      text: message,
+      icon: 'error',
+      timer: 3000,
+    })
+
+
+  }
+}
 
 const isPasswordVisible = ref(false)
 </script>
@@ -29,37 +69,40 @@ const isPasswordVisible = ref(false)
         </template>
 
         <VCardTitle class="text-2xl font-weight-bold">
-          sneat
+          Kiem lua
         </VCardTitle>
       </VCardItem>
 
       <VCardText class="pt-2">
         <h5 class="text-h5 mb-1">
-          Adventure starts here 🚀
+          Đăng ký
         </h5>
-        <p class="mb-0">
-          Make your app management easy and fun!
-        </p>
       </VCardText>
 
       <VCardText>
-        <VForm @submit.prevent="$router.push('/')">
+        <VForm @submit.prevent="register"  ref="formRef">
           <VRow>
             <!-- Username -->
             <VCol cols="12">
               <VTextField
-                v-model="form.username"
-                autofocus
-                label="Username"
-                placeholder="Johndoe"
+                v-model="form.name"
+                label="Họ tên"
+                :rules="[
+                  (v) => !!v || 'Name is required',
+                ]"
+                placeholder="Nguyễn Văn A"
               />
             </VCol>
             <!-- email -->
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
+                :rules="[
+                  (v) => !!v || 'Email is required',
+                  (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
+                ]"
                 label="Email"
-                placeholder="johndoe@email.com"
+                placeholder="nguyenvana@email.com"
                 type="email"
               />
             </VCol>
@@ -74,30 +117,16 @@ const isPasswordVisible = ref(false)
                 :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
               />
-              <div class="d-flex align-center mt-1 mb-4">
-                <VCheckbox
-                  id="privacy-policy"
-                  v-model="form.privacyPolicies"
-                  inline
-                />
-                <VLabel
-                  for="privacy-policy"
-                  style="opacity: 1;"
-                >
-                  <span class="me-1">I agree to</span>
-                  <a
-                    href="javascript:void(0)"
-                    class="text-primary"
-                  >privacy policy & terms</a>
-                </VLabel>
-              </div>
-
-              <VBtn
+              <div class="d-flex align-center my-4">
+                <VBtn
                 block
                 type="submit"
               >
-                Sign up
+                Đăng ký
               </VBtn>
+              </div>
+
+
             </VCol>
 
             <!-- login instead -->
@@ -105,22 +134,13 @@ const isPasswordVisible = ref(false)
               cols="12"
               class="text-center text-base"
             >
-              <span>Already have an account?</span>
+              <span>Bạn đã có tài khoản?</span>
               <RouterLink
                 class="text-primary ms-2"
                 to="/login"
               >
-                Sign in instead
+                Đăng nhập
               </RouterLink>
-            </VCol>
-
-            <VCol
-              cols="12"
-              class="d-flex align-center"
-            >
-              <VDivider />
-              <span class="mx-4">or</span>
-              <VDivider />
             </VCol>
 
             <!-- auth providers -->
@@ -128,7 +148,7 @@ const isPasswordVisible = ref(false)
               cols="12"
               class="text-center"
             >
-              <AuthProvider />
+              <!-- <AuthProvider /> -->
             </VCol>
           </VRow>
         </VForm>
