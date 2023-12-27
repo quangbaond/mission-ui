@@ -31,12 +31,12 @@ const submitForm = async () => {
     const response = await store.dispatch('userStore/login', form.value)
 
     console.log('response', response);
-    const { status, data, message } = response.data
+    const { status, data, message } = response
 
 
     if (status) {
-      setStorage(PROFILE_KEY, data)
-      setStorage(TOKEN_KEY, data.jwt)
+      setStorage(PROFILE_KEY, data.data)
+      setStorage(TOKEN_KEY, data.data.jwt)
       swal({
         title: 'Login Success',
         text: message,
@@ -46,16 +46,16 @@ const submitForm = async () => {
 
       // how to use router global
       router.push({ name: 'tasks' })
+      return
     }
 
-    if (!status) {
-      swal({
-        title: 'Login Failed',
-        text: message,
-        icon: 'error',
-        timer: 2000,
-      })
-    }
+    swal({
+      title: 'Login Failed',
+      text: message,
+      icon: 'error',
+      timer: 2000,
+    })
+
   }
 }
 
