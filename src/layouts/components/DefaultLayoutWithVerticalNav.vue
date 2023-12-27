@@ -96,6 +96,13 @@ onMounted(() => {
           to: '/tasks',
         }"
       />
+      <VerticalNavLink
+        :item="{
+          title: 'Rút tiền',
+          icon: 'mdi-currency-usd',
+          to: '/withdraw',
+        }"
+      />
 
     </template>
 

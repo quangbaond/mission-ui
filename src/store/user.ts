@@ -68,6 +68,20 @@ const userStore = {
 
       return res;
     },
+
+    // withdraw,
+
+    async withdraw({ commit }: { commit: any }, params: any) {
+      const res = await POST("/v1/withdraw", params);
+      return res;
+    },
+
+    // getWithdrawHistory,
+
+    async getWithdrawHistory({ commit }: { commit: any }, params: any) {
+      const res = await GET("/v1/withdraw", params);
+      return res;
+    },
   },
 
   mutations: {

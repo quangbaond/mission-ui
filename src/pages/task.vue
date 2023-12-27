@@ -172,12 +172,10 @@ onMounted(() => {
     }">Nhiệm vụ vượt link rút gọn</div>
     </template>
     <template v-slot:append>
-        <!-- <div style="padding: 10px; background: #F3E5F5; border-radius: 7px"> -->
-            <v-icon size="small" :icon="iconShowMissionSortLink"  @click="() => {
-              showMissionSortLink = !showMissionSortLink
-              iconShowMissionSortLink = showMissionSortLink ? 'mdi-arrow-up' : 'mdi-arrow-down'
-            }"></v-icon>
-        <!-- </div> -->
+      <v-icon size="small" :icon="iconShowMissionSortLink"  @click="() => {
+        showMissionSortLink = !showMissionSortLink
+        iconShowMissionSortLink = showMissionSortLink ? 'mdi-arrow-up' : 'mdi-arrow-down'
+      }"></v-icon>
     </template>
     <v-card-text>
       <collapse-transition>

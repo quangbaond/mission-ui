@@ -22,6 +22,12 @@ const router = createRouter({
           component: () => import("../pages/task.vue"),
           meta: { requiresAuth: true },
         },
+        {
+          path: "withdraw",
+          name: "withdraw",
+          component: () => import("../pages/withdraw.vue"),
+          meta: { requiresAuth: true },
+        },
       ],
     },
     {

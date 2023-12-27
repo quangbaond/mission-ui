@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { removeStorage, setStorage } from '@/@common';
 import { PROFILE_KEY, TOKEN_KEY } from '@/@common/constants';
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue';
 import logo from '@images/logo.svg?raw';
 import { inject } from 'vue';
 import { useRouter } from 'vue-router';
@@ -91,9 +90,6 @@ onMounted(() => {
         <h5 class="text-h5 mb-1">
           Welcome to Kiếm lúa 👋🏻
         </h5>
-        <p class="mb-0">
-          Please sign-in to your account and start the adventure
-        </p>
       </VCardText>
 
       <VCardText>
@@ -138,12 +134,12 @@ onMounted(() => {
                   label="Remember me"
                 />
 
-                <RouterLink
+                <!-- <RouterLink
                   class="text-primary ms-2 mb-1"
                   to="javascript:void(0)"
                 >
                   Forgot Password?
-                </RouterLink>
+                </RouterLink> -->
               </div>
 
               <!-- login button -->
@@ -160,31 +156,15 @@ onMounted(() => {
               cols="12"
               class="text-center text-base"
             >
-              <span>New on our platform?</span>
+              <span>Bạn chưa có tài khoản?</span>
               <RouterLink
                 class="text-primary ms-2"
                 to="/register"
               >
-                Create an account
+                Đăng ký tại đây.
               </RouterLink>
             </VCol>
 
-            <VCol
-              cols="12"
-              class="d-flex align-center"
-            >
-              <VDivider />
-              <span class="mx-4">or</span>
-              <VDivider />
-            </VCol>
-
-            <!-- auth providers -->
-            <VCol
-              cols="12"
-              class="text-center"
-            >
-              <AuthProvider />
-            </VCol>
           </VRow>
         </VForm>
       </VCardText>

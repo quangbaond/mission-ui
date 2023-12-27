@@ -1,3 +1,4 @@
+import moment from "moment";
 // save data to location storage by key
 export const setStorage = (key: string, data: any) => {
   window.localStorage.setItem(key, JSON.stringify(data));
@@ -17,4 +18,8 @@ export const getStorage = (key: string) => {
 // remove data from location storage by key
 export const removeStorage = (key: string) => {
   window.localStorage.removeItem(key);
+};
+
+export const formatDateTime = (date: Date) => {
+  return moment(date).format("YYYY-MM-DD HH:mm:ss");
 };
