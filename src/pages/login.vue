@@ -46,7 +46,7 @@ const submitForm = async () => {
       })
 
       // how to use router global
-      router.push({ name: 'task' })
+      router.push({ name: 'tasks' })
     }
 
     if (!status) {
