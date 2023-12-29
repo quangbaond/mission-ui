@@ -20,6 +20,9 @@ const profile = computed(() => store.state.userStore.profile)
 
 const getProfile = async () => {
   const res = store.dispatch('userStore/getProfile')
+
+
+  console.log('res', res);
 }
 
 onMounted(() => {
@@ -103,6 +106,22 @@ onMounted(() => {
           to: '/withdraw',
         }"
       />
+      <VerticalNavLink
+        :item="{
+          title: 'Giới thiệu',
+          icon: 'mdi-account-group-outline',
+          to: '/introduce',
+        }"
+      />
+
+
+      <!-- <VerticalNavLink
+        :item="{
+          title: '',
+          icon: 'mdi-currency-usd',
+          to: '/withdraw',
+        }"
+      /> -->
 
     </template>
 
@@ -124,5 +143,10 @@ onMounted(() => {
   line-height: 1.3125rem;
   padding-block: 0.125rem;
   padding-inline: 0.25rem;
+}
+</style>
+<style lang="scss">
+.v-btn__loader .text-primary{
+  color: white !important;
 }
 </style>

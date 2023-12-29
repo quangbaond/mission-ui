@@ -4,13 +4,13 @@ import { useStore } from 'vuex';
 const store = useStore()
 const profile = computed(() => store.state.userStore.profile)
 const formRef = ref(null as any)
-
+const loading = computed(() => store.state.loading)
 
 const swal = inject('$swal')
 
 const form = ref({
   method: 'momo',
-  amount: 0,
+  amount: 10000,
   phone: null,
   bank_name: '',
   bank_number: '',
@@ -111,7 +111,7 @@ onMounted(() => {
     <v-col md="12" cols="12" sm="12">
       <v-card title="Thông tin thanh toán">
         <template v-slot:append>
-            Quy đổi: 1$ = 23.000 VNĐ
+            Quy đổi: 10.000 $ = 10.000 VNĐ
         </template>
           <v-card-text>
             <v-form @submit.prevent="withdraw" ref="formRef">
@@ -119,7 +119,13 @@ onMounted(() => {
                   <v-col md="6" sm="12" cols="12">
                       <v-row>
                           <v-col md="12" sm="12" cols="12">
-                              <v-text-field type='number' density="compact" label="Số tiền rút" v-model="form.amount">
+                              <v-text-field type='number' density="compact" label="Số tiền rút" v-model="form.amount" min="10000"
+                              :rules="[
+                                  (v) => !!v || 'Số tiền rút không được để trống',
+                                  (v) => (v && !isNaN(v)) || 'Số tiền rút phải là số',
+                                  (v) => (v && v >= 10000) || 'Số tiền rút phải lớn hơn 10.000',
+                              ]"
+                              >
                               </v-text-field>
                           </v-col>
                           <v-col md="12" sm="12" cols="12">
@@ -233,7 +239,7 @@ onMounted(() => {
                       </v-row>
                       <v-row>
                         <v-col md="12" sm="12" cols="12">
-                          <v-btn type="submit" color="primary">Rút tiền</v-btn>
+                          <v-btn style="width: 100%" type="submit" color="primary" :loading="loading">Rút tiền</v-btn>
                         </v-col>
                       </v-row>
                   </v-col>
@@ -277,6 +283,10 @@ onMounted(() => {
             :items="withdraws"
             item-key="id"
             :hide-default-footer="true"
+            no-data-text="Không có dữ liệu"
+            loading-text="Đang tải dữ liệu"
+            items-per-page-text="Số dòng trên trang"
+
           >
             <template v-slot:item.status="{item}">
               <v-chip  :color="item.selectable.status == 0 ? 'warning' : item.selectable.status  == 1 ? 'success' : 'error'"  small >

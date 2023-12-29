@@ -80,16 +80,53 @@ const doTask = async (id: number, url: string) => {
     // call mutation to update profile
     store.dispatch('userStore/getProfile')
     getMissions();
-
     swal({
       title: "Thành công",
-      text: message,
+      text: 'Link rút gọn đã được tạo, bạn có thể copy link và dán vào trình duyệt để làm nhiệm vụ',
+      input: "text",
+      inputValue: url,
+      inputAttributes: {
+        autocapitalize: "off",
+        readonly: true,
+      },
       icon: "success",
-      timer: 2000,
+      confirmButtonText: "Copy",
+      showCancelButton: true,
+      cancelButtonText: "Đóng",
+      showLoaderOnConfirm: true,
+      preConfirm: (value: string) => {
+        copyToClipboard(value);
+      },
+    }).then((value: string) => {
+      switch (value) {
+        case "copy":
+          copyToClipboard(url);
+          break;
+        default:
+          break;
+      }
     });
+    return
 
-    navigateTo(url);
+    // navigateTo(url);
   }
+
+  swal({
+    title: "Thất bại",
+    text: message,
+    icon: "error",
+    confirmButtonText: "Đóng",
+    timer: 2000,
+  });
+};
+const copyToClipboard = (text: string) => {
+  const input = document.createElement("input");
+  input.setAttribute("value", text);
+  document.body.appendChild(input);
+  input.select();
+  const result = document.execCommand("copy");
+  document.body.removeChild(input);
+  return result;
 };
 
 const navigateTo = (url: string) => {
@@ -141,7 +178,7 @@ onMounted(() => {
             </div>
         </template>
         <v-card-text>
-          <b>{{ profile.user_mission_count }}</b>
+          <b>{{ profile.user_mission_count || 0}}</b>
         </v-card-text>
       </v-card>
     </v-col>
@@ -170,6 +207,7 @@ onMounted(() => {
       showMissionSortLink = !showMissionSortLink
       iconShowMissionSortLink = showMissionSortLink ? 'mdi-arrow-up' : 'mdi-arrow-down'
     }">Nhiệm vụ vượt link rút gọn</div>
+
     </template>
     <template v-slot:append>
       <v-icon size="small" :icon="iconShowMissionSortLink"  @click="() => {
@@ -177,6 +215,7 @@ onMounted(() => {
         iconShowMissionSortLink = showMissionSortLink ? 'mdi-arrow-up' : 'mdi-arrow-down'
       }"></v-icon>
     </template>
+     <v-divider></v-divider>
     <v-card-text>
       <collapse-transition>
         <div v-show="showMissionSortLink">
@@ -188,6 +227,7 @@ onMounted(() => {
                 width="100%"
                 :title="item.name"
                 append-icon="mdi-arrow-down"
+                style="box-shadow: 7px 9px 8px -9px rgba(0,0,0,0.9); border: 1px solid #E0E0E0;"
               >
                 <template v-slot:append>
                   <v-btn size="small" color="primary" @click="doTask(item.id, item?.url)" :disabled="item.disabled">

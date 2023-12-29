@@ -9,20 +9,24 @@ const form = ref({
   name: '',
   email: '',
   password: '',
+  ref: null as any,
 })
 
 const formRef = ref(null as any)
 
 const router = useRouter()
 
+const query = computed(() => router.currentRoute.value.query.ref)
+
+const loading = computed(() => store.state.loading)
+
+
 const register = async () => {
   const isValid = await formRef.value.validate()
 
-  console.log(isValid)
+  form.value.ref = query.value
 
   if (isValid.valid) {
-    console.log(form.value)
-
     const response = await store.dispatch('userStore/register', form.value)
 
     const { status, data, message } = response
@@ -121,6 +125,7 @@ const isPasswordVisible = ref(false)
                 <VBtn
                 block
                 type="submit"
+                :loading="loading"
               >
                 Đăng ký
               </VBtn>
@@ -159,4 +164,10 @@ const isPasswordVisible = ref(false)
 
 <style lang="scss">
 @use "@core/scss/template/pages/page-auth.scss";
+</style>
+
+<style lang="scss">
+.v-btn__loader .text-primary{
+  color: white !important;
+}
 </style>

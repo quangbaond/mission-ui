@@ -60,10 +60,9 @@ const userStore = {
 
     async updateProfile({ commit }: { commit: any }, params: IUser) {
       const res = await POST("/v1/profile", params);
-      console.log(res.data.data);
 
       if (res.status) {
-        commit("setProfile", res.data.data);
+        commit("setProfile", res.data.result);
       }
 
       return res;

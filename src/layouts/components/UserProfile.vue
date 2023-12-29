@@ -1,8 +1,21 @@
 <script setup lang="ts">
-import avatar1 from '@images/avatars/avatar-1.png';
 import { useStore } from 'vuex';
 const store = useStore()
 const profile = computed(() => store.state.userStore.profile)
+// convert  name to first letter
+const name = computed(() => {
+  const name = profile.value?.name
+  if (name) {
+    const nameArr = name.split(' ')
+    return nameArr[nameArr.length - 1].charAt(0)
+  }
+  return ''
+})
+// random color
+const randomColor = computed(() => {
+  const colors = ['primary', 'success', 'info', 'warning', 'error']
+  return colors[Math.floor(Math.random() * colors.length)]
+})
 </script>
 
 <template>
@@ -16,10 +29,11 @@ const profile = computed(() => store.state.userStore.profile)
   >
     <VAvatar
       class="cursor-pointer"
-      color="primary"
       variant="tonal"
+      :color="randomColor"
     >
-      <VImg :src="avatar1" />
+      <span class="text-h5">{{ name }}</span>
+      <!-- <VImg :src="avatar1" /> -->
 
       <!-- SECTION Menu -->
       <VMenu
@@ -41,10 +55,11 @@ const profile = computed(() => store.state.userStore.profile)
                   color="success"
                 >
                   <VAvatar
-                    color="primary"
+                    :color="randomColor"
                     variant="tonal"
                   >
-                    <VImg :src="avatar1" />
+                    <span class="text-h5">{{ name }}</span>
+
                   </VAvatar>
                 </VBadge>
               </VListItemAction>
@@ -58,7 +73,7 @@ const profile = computed(() => store.state.userStore.profile)
           <VDivider class="my-2" />
 
           <!-- 👉 Profile -->
-          <VListItem link>
+          <VListItem link href="/profile">
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -67,7 +82,7 @@ const profile = computed(() => store.state.userStore.profile)
               />
             </template>
 
-            <VListItemTitle>Profile</VListItemTitle>
+            <VListItemTitle>Thông tin tài khoản</VListItemTitle>
           </VListItem>
 
           <!-- 👉 Settings -->
@@ -122,7 +137,7 @@ const profile = computed(() => store.state.userStore.profile)
               />
             </template>
 
-            <VListItemTitle>Logout</VListItemTitle>
+            <VListItemTitle>Đăng xuất</VListItemTitle>
           </VListItem>
         </VList>
       </VMenu>

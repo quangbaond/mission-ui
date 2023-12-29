@@ -1,15 +1,22 @@
-import { createLogger, createStore } from 'vuex'
-import userStore from './user'
+import { createLogger, createStore } from "vuex";
+import userStore from "./user";
 
 // Create a new store instance.
 const store = createStore({
   state() {
     return {
-      count: 0,
-    }
+      loading: false,
+    };
   },
   actions: {
-
+    setLoading({ commit }: { commit: any }, params: boolean) {
+      commit("setLoading", params);
+    },
+  },
+  mutations: {
+    setLoading(state: any, params: boolean) {
+      state.loading = params;
+    },
   },
   plugins: [createLogger()],
 
@@ -17,7 +24,6 @@ const store = createStore({
   modules: {
     userStore,
   },
+});
 
-})
-
-export default store
+export default store;

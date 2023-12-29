@@ -28,6 +28,18 @@ const router = createRouter({
           component: () => import("../pages/withdraw.vue"),
           meta: { requiresAuth: true },
         },
+        {
+          path: "profile",
+          name: "profile",
+          component: () => import("../pages/profile.vue"),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: "introduce",
+          name: "introduce",
+          component: () => import("../pages/introduce.vue"),
+          meta: { requiresAuth: true },
+        },
       ],
     },
     {

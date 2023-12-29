@@ -19,6 +19,7 @@ const formRef = ref(null as any)
 const isPasswordVisible = ref(false)
 
 const router = useRouter()
+const loading = computed(() => store.state.loading)
 
 const submitForm = async () => {
   const isValid = await formRef.value.validate()
@@ -146,6 +147,7 @@ onMounted(() => {
               <VBtn
                 block
                 type="submit"
+                :loading="loading"
               >
                 Login
               </VBtn>
@@ -174,4 +176,10 @@ onMounted(() => {
 
 <style lang="scss">
 @use "@core/scss/template/pages/page-auth.scss";
+</style>
+
+<style lang="scss">
+.v-btn__loader .text-primary{
+  color: white !important;
+}
 </style>
