@@ -91,7 +91,7 @@ onMounted(() => {
                 <p style="margin-top: 10px">Hoa hồng sẽ được cập nhật vào tài khoản của bạn sau khi người bạn giới thiệu hoàn thành nhiệm vụ và rút tiền thành công.</p>
                 <v-label style="color: #000">Link giới thiệu: </v-label>
                 <v-row align="center">
-                    <v-col md="10" sm="10" cols="10">
+                    <v-col md="10" sm="12" cols="12">
                         <v-text-field
                             outlined
                             readonly
@@ -100,7 +100,7 @@ onMounted(() => {
                             density="compact"
                         ></v-text-field>
                     </v-col>
-                    <v-col md="2" sm="2" cols="2" style="height: 100%">
+                    <v-col md="2" sm="12" cols="12" style="height: 100%">
                         <v-btn
                             style="width: 100%"
                             class="mt-2"
