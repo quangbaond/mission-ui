@@ -4,7 +4,6 @@ import { auth } from '@/firebaseConfig';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 
 import { ref } from 'vue';
-import "vue-phone-number-input/dist/vue-phone-number-input.css";
 import { useStore } from 'vuex';
 const store = useStore()
 const loading = computed(() => store.state.loading)
