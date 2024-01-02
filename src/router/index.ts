@@ -23,6 +23,13 @@ const router = createRouter({
           meta: { requiresAuth: true },
         },
         {
+          path: "task/:slug",
+          name: "task_detail",
+          component: () => import("../pages/taskDetail.vue"),
+          meta: { requiresAuth: true },
+        },
+
+        {
           path: "withdraw",
           name: "withdraw",
           component: () => import("../pages/withdraw.vue"),
@@ -69,11 +76,11 @@ router.beforeEach(async (to, from, next) => {
   // instead of having to check every route record with
   // to.matched.some(record => record.meta.requiresAuth)
   const profile = getStorage(PROFILE_KEY);
+
   console.log(profile);
 
-  if (to.matched.some((record) => record.meta.requiresAuth) && !profile) {
+  if (to.matched.some((record) => record.meta.requiresAuth) && !profile)
     next({ path: "/login" });
-  }
 
   return next();
 });

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { removeStorage, setStorage } from '@/@common';
-import { PROFILE_KEY, TOKEN_KEY } from '@/@common/constants';
-import logo from '@images/logo.svg?raw';
-import { inject } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { inject } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { removeStorage, setStorage } from '@/@common'
+import { PROFILE_KEY, TOKEN_KEY } from '@/@common/constants'
+import logo from '@images/logo.svg?raw'
+
 const swal = inject('$swal')
 const store = useStore()
 
@@ -31,15 +32,15 @@ const submitForm = async () => {
 
     const response = await store.dispatch('userStore/login', form.value)
 
-    console.log('response', response);
-    const { status, data, message } = response
+    console.log('response', response)
 
+    const { status, data, message } = response
 
     if (status) {
       setStorage(PROFILE_KEY, data.data)
       setStorage(TOKEN_KEY, data.data.jwt)
       swal({
-        title: 'Login Success',
+        title: 'Đăng nhập thành công!',
         text: message,
         icon: 'success',
         timer: 2000,
@@ -47,16 +48,16 @@ const submitForm = async () => {
 
       // how to use router global
       router.push({ name: 'tasks' })
+
       return
     }
 
     swal({
-      title: 'Login Failed',
+      title: 'Đăng nhập thất bại!',
       text: message,
       icon: 'error',
       timer: 2000,
     })
-
   }
 }
 
@@ -135,12 +136,14 @@ onMounted(() => {
                   label="Remember me"
                 />
 
-                <!-- <RouterLink
+                <!--
+                  <RouterLink
                   class="text-primary ms-2 mb-1"
                   to="javascript:void(0)"
-                >
+                  >
                   Forgot Password?
-                </RouterLink> -->
+                  </RouterLink>
+                -->
               </div>
 
               <!-- login button -->
@@ -166,7 +169,6 @@ onMounted(() => {
                 Đăng ký tại đây.
               </RouterLink>
             </VCol>
-
           </VRow>
         </VForm>
       </VCardText>

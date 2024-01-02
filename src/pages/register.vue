@@ -33,8 +33,8 @@ const register = async () => {
 
     if(status) {
       swal({
-        title: 'Register Success',
-        text: message,
+        title: 'Đăng ký thành công!',
+        text: 'Vui lòng đăng nhập.',
         icon: 'success',
         timer: 2000,
       })
@@ -43,7 +43,7 @@ const register = async () => {
     }
 
     swal({
-      title: 'Register Failed',
+      title: 'Đăng ký thất bại!',
       text: message,
       icon: 'error',
       timer: 3000,
